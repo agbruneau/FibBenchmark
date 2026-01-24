@@ -1,0 +1,45 @@
+# Rust build artifacts
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated results (can be regenerated)
+/results/
+/reports/
+/public/
+*.csv
+*.svg
+*.png
+!docs/**/*.png
+
+# Benchmark artifacts
+/target/criterion/
+
+# Flamegraph outputs
+*.flamegraph.svg
+perf.data
+perf.data.old
+
+# Coverage
+*.profraw
+*.profdata
+/coverage/
+
+# Environment
+.env
+.env.local
+
+# IDE/Editor specific
+.gemini/
+gemini.md

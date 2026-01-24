@@ -1,0 +1,25 @@
+[package]
+name = "fib-profiler"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Profiling and memory analysis tools for Fibonacci benchmarks"
+documentation = "https://docs.rs/fib-profiler"
+homepage = "https://github.com/agbru/FibBenchmark"
+readme = "../../README.md"
+keywords = ["fibonacci", "profiling", "flamegraph", "memory"]
+categories = ["development-tools::profiling"]
+
+[[bin]]
+name = "fib-profiler"
+path = "src/main.rs"
+
+[dependencies]
+fib-core = { path = "../fib-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[target.'cfg(unix)'.dependencies]
+pprof = { version = "0.13", features = ["flamegraph"] }

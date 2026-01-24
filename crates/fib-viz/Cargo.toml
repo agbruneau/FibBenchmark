@@ -1,0 +1,30 @@
+[package]
+name = "fib-viz"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Visualization and chart generation for Fibonacci benchmark results"
+documentation = "https://docs.rs/fib-viz"
+homepage = "https://github.com/agbru/FibBenchmark"
+readme = "../../README.md"
+keywords = ["fibonacci", "visualization", "charts", "plotly"]
+categories = ["visualization"]
+
+[lib]
+name = "fib_viz"
+path = "src/lib.rs"
+
+[[bin]]
+name = "fib-viz"
+path = "src/main.rs"
+
+[dependencies]
+fib-core = { path = "../fib-core" }
+plotly = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+tempfile = "3.24.0"

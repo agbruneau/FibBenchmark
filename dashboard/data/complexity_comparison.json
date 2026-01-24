@@ -1,0 +1,92 @@
+[
+  {
+    "n": 10,
+    "iterative_ns": 33,
+    "matrix_ns": 1
+  },
+  {
+    "n": 20,
+    "iterative_ns": 0,
+    "matrix_ns": 1
+  },
+  {
+    "n": 30,
+    "iterative_ns": 0,
+    "matrix_ns": 0
+  },
+  {
+    "n": 40,
+    "iterative_ns": 0,
+    "matrix_ns": 0
+  },
+  {
+    "n": 50,
+    "iterative_ns": 1,
+    "matrix_ns": 0
+  },
+  {
+    "n": 60,
+    "iterative_ns": 0,
+    "matrix_ns": 0
+  },
+  {
+    "n": 70,
+    "iterative_ns": 0,
+    "matrix_ns": 1
+  },
+  {
+    "n": 80,
+    "iterative_ns": 0,
+    "matrix_ns": 1
+  },
+  {
+    "n": 90,
+    "iterative_ns": 0,
+    "matrix_ns": 0
+  },
+  {
+    "n": 100,
+    "iterative_ns": 0,
+    "matrix_ns": 0
+  },
+  {
+    "n": 110,
+    "iterative_ns": 0,
+    "matrix_ns": 0
+  },
+  {
+    "n": 120,
+    "iterative_ns": 0,
+    "matrix_ns": 0
+  },
+  {
+    "n": 130,
+    "iterative_ns": 0,
+    "matrix_ns": 0
+  },
+  {
+    "n": 140,
+    "iterative_ns": 1,
+    "matrix_ns": 0
+  },
+  {
+    "n": 150,
+    "iterative_ns": 1,
+    "matrix_ns": 0
+  },
+  {
+    "n": 160,
+    "iterative_ns": 1,
+    "matrix_ns": 0
+  },
+  {
+    "n": 170,
+    "iterative_ns": 0,
+    "matrix_ns": 0
+  },
+  {
+    "n": 180,
+    "iterative_ns": 1,
+    "matrix_ns": 0
+  }
+]

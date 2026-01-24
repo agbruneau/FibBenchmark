@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fibonacci Benchmark Report</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🔬 Fibonacci Benchmark Report</h1>
+        <p class="subtitle">Performance Analysis Suite</p>
+        <p class="timestamp">
+          Generated: <span id="timestamp">{{TIMESTAMP}}</span>
+        </p>
+      </header>
+
+      <nav class="tabs" role="tablist" aria-label="Report Sections">
+        <button
+          id="tab-overview"
+          class="tab-btn active"
+          role="tab"
+          aria-selected="true"
+          aria-controls="overview"
+          tabindex="0"
+          data-tab="overview"
+        >
+          Overview
+        </button>
+        <button
+          id="tab-complexity"
+          class="tab-btn"
+          role="tab"
+          aria-selected="false"
+          aria-controls="complexity"
+          tabindex="-1"
+          data-tab="complexity"
+        >
+          Complexity
+        </button>
+        <button
+          id="tab-binet"
+          class="tab-btn"
+          role="tab"
+          aria-selected="false"
+          aria-controls="binet"
+          tabindex="-1"
+          data-tab="binet"
+        >
+          Binet Accuracy
+        </button>
+        <button
+          id="tab-golden"
+          class="tab-btn"
+          role="tab"
+          aria-selected="false"
+          aria-controls="golden"
+          tabindex="-1"
+          data-tab="golden"
+        >
+          Golden Ratio
+        </button>
+      </nav>
+
+      <main>
+        <!-- Overview Tab -->
+        <section
+          id="overview"
+          class="tab-content active"
+          role="tabpanel"
+          aria-labelledby="tab-overview"
+          tabindex="0"
+        >
+          <h2>📊 Executive Summary</h2>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-value">6</div>
+              <div class="metric-label">Algorithms Tested</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">O(log n)</div>
+              <div class="metric-label">Best Complexity</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">n ≤ 78</div>
+              <div class="metric-label">Binet Precision Limit</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">F(186)</div>
+              <div class="metric-label">Max u128 Value</div>
+            </div>
+          </div>
+
+          <h3>Algorithm Comparison</h3>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Algorithm</th>
+                <th>Time Complexity</th>
+                <th>Space Complexity</th>
+                <th>Best For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Recursive (naive)</td>
+                <td class="complexity-bad">O(2<sup>n</sup>)</td>
+                <td>O(n)</td>
+                <td>Educational purposes only</td>
+              </tr>
+              <tr>
+                <td>Recursive + Memo</td>
+                <td class="complexity-ok">O(n)</td>
+                <td>O(n)</td>
+                <td>Small n with caching</td>
+              </tr>
+              <tr>
+                <td>Iterative</td>
+                <td class="complexity-ok">O(n)</td>
+                <td class="complexity-good">O(1)</td>
+                <td>General purpose</td>
+              </tr>
+              <tr>
+                <td>Iterative Branchless</td>
+                <td class="complexity-ok">O(n)</td>
+                <td class="complexity-good">O(1)</td>
+                <td>Micro-optimizations</td>
+              </tr>
+              <tr>
+                <td>Matrix</td>
+                <td class="complexity-good">O(log n)</td>
+                <td class="complexity-good">O(1)</td>
+                <td>Large n values</td>
+              </tr>
+              <tr>
+                <td>Binet</td>
+                <td class="complexity-best">O(1)</td>
+                <td class="complexity-good">O(1)</td>
+                <td>Approximation (n ≤ 78)</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Complexity Tab -->
+        <section
+          id="complexity"
+          class="tab-content"
+          role="tabpanel"
+          aria-labelledby="tab-complexity"
+          tabindex="0"
+        >
+          <h2>⏱️ Complexity Comparison</h2>
+          <p>
+            Performance comparison between iterative O(n) and matrix O(log n)
+            methods.
+          </p>
+          <div class="chart-container">
+            <canvas id="complexityChart"></canvas>
+          </div>
+          <div id="complexityData" class="data-preview"></div>
+        </section>
+
+        <!-- Binet Accuracy Tab -->
+        <section
+          id="binet"
+          class="tab-content"
+          role="tabpanel"
+          aria-labelledby="tab-binet"
+          tabindex="0"
+        >
+          <h2>🎯 Binet Formula Accuracy</h2>
+          <p>
+            Analysis of floating-point precision limits for Binet's closed-form
+            formula.
+          </p>
+          <div class="chart-container">
+            <canvas id="binetChart"></canvas>
+          </div>
+          <div class="warning-box">
+            <strong>⚠️ Precision Warning:</strong> Binet's formula using f64 is
+            only accurate for n ≤ 78 due to floating-point precision limits.
+          </div>
+          <div id="binetData" class="data-preview"></div>
+        </section>
+
+        <!-- Golden Ratio Tab -->
+        <section
+          id="golden"
+          class="tab-content"
+          role="tabpanel"
+          aria-labelledby="tab-golden"
+          tabindex="0"
+        >
+          <h2>φ Golden Ratio Convergence</h2>
+          <p>
+            Convergence of F(n+1)/F(n) to the golden ratio φ ≈
+            1.618033988749895.
+          </p>
+          <div class="chart-container">
+            <canvas id="goldenChart"></canvas>
+          </div>
+          <div id="goldenData" class="data-preview"></div>
+        </section>
+      </main>
+
+      <footer>
+        <p>
+          Generated by <strong>Fibonacci Benchmark Suite</strong> •
+          <a href="https://github.com/agbru/FibBenchmark">GitHub</a>
+        </p>
+      </footer>
+    </div>
+
+    <script src="report.js"></script>
+  </body>
+</html>

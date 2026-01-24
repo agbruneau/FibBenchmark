@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard de benchmarks Fibonacci - Analyse comparative des algorithmes de calcul">
+    <title>Fibonacci Benchmark Dashboard</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">F<sub>n</sub></span>
+                <span class="logo-text">FibBenchmark</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#hero" class="nav-link active">Accueil</a></li>
+                <li><a href="#metrics" class="nav-link">Metriques</a></li>
+                <li><a href="#algorithms" class="nav-link">Algorithmes</a></li>
+                <li><a href="#complexity" class="nav-link">Complexite</a></li>
+                <li><a href="#binet" class="nav-link">Binet</a></li>
+                <li><a href="#golden" class="nav-link">Nombre d'Or</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Changer le theme">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="https://github.com/agbru/FibBenchmark" class="nav-btn" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+            
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-background">
+            <div class="hero-gradient"></div>
+            <div class="hero-grid"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Rapport genere le <span id="reportDate">7 janvier 2026</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">Fibonacci</span>
+                <span class="title-line gradient-text">Benchmark Suite</span>
+            </h1>
+            <p class="hero-description">
+                Analyse comparative des performances de 6 algorithmes de calcul de la suite de Fibonacci.
+                Mesurez, comparez et optimisez vos implementations.
+            </p>
+            <div class="hero-actions">
+                <a href="#metrics" class="btn btn-primary">
+                    Voir les resultats
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+                <a href="#algorithms" class="btn btn-secondary">Explorer les algorithmes</a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span>Defiler</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Metrics Section (Bento Grid) -->
+    <section class="section" id="metrics">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Vue d'ensemble</span>
+                <h2 class="section-title">Metriques Cles</h2>
+                <p class="section-description">Les resultats essentiels de l'analyse des benchmarks</p>
+            </div>
+            
+            <div class="bento-grid">
+                <div class="bento-card bento-large" data-animate>
+                    <div class="bento-icon algorithms-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </div>
+                    <div class="bento-value" data-count="6">0</div>
+                    <div class="bento-label">Algorithmes Testes</div>
+                    <div class="bento-detail">Recursif, Iteratif, Matrix, Binet...</div>
+                </div>
+                
+                <div class="bento-card" data-animate>
+                    <div class="bento-icon complexity-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
+                    </div>
+                    <div class="bento-value complexity-best">O(log n)</div>
+                    <div class="bento-label">Meilleure Complexite</div>
+                    <div class="bento-detail">Methode matricielle</div>
+                </div>
+                
+                <div class="bento-card" data-animate>
+                    <div class="bento-icon precision-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="6"></circle>
+                            <circle cx="12" cy="12" r="2"></circle>
+                        </svg>
+                    </div>
+                    <div class="bento-value">n &le; 78</div>
+                    <div class="bento-label">Limite Binet</div>
+                    <div class="bento-detail">Precision f64</div>
+                </div>
+                
+                <div class="bento-card" data-animate>
+                    <div class="bento-icon max-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 20V10"></path>
+                            <path d="M12 20V4"></path>
+                            <path d="M6 20v-6"></path>
+                        </svg>
+                    </div>
+                    <div class="bento-value">F(186)</div>
+                    <div class="bento-label">Max u128</div>
+                    <div class="bento-detail">Limite entiere</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Algorithms Comparison Section -->
+    <section class="section section-alt" id="algorithms">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Comparaison</span>
+                <h2 class="section-title">Algorithmes</h2>
+                <p class="section-description">Analyse detaillee de chaque methode de calcul</p>
+            </div>
+            
+            <div class="table-container" data-animate>
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Algorithme</th>
+                            <th>Complexite Temps</th>
+                            <th>Complexite Espace</th>
+                            <th>Recommandation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="algo-name">
+                                    <span class="algo-icon recursive"></span>
+                                    Recursif (naif)
+                                </div>
+                            </td>
+                            <td><span class="complexity-badge bad">O(2<sup>n</sup>)</span></td>
+                            <td><span class="complexity-badge neutral">O(n)</span></td>
+                            <td><span class="recommendation warning">Educatif uniquement</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="algo-name">
+                                    <span class="algo-icon memo"></span>
+                                    Recursif + Memo
+                                </div>
+                            </td>
+                            <td><span class="complexity-badge ok">O(n)</span></td>
+                            <td><span class="complexity-badge neutral">O(n)</span></td>
+                            <td><span class="recommendation info">Petit n avec cache</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="algo-name">
+                                    <span class="algo-icon iterative"></span>
+                                    Iteratif
+                                </div>
+                            </td>
+                            <td><span class="complexity-badge ok">O(n)</span></td>
+                            <td><span class="complexity-badge good">O(1)</span></td>
+                            <td><span class="recommendation success">Usage general</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="algo-name">
+                                    <span class="algo-icon branchless"></span>
+                                    Iteratif Branchless
+                                </div>
+                            </td>
+                            <td><span class="complexity-badge ok">O(n)</span></td>
+                            <td><span class="complexity-badge good">O(1)</span></td>
+                            <td><span class="recommendation info">Micro-optimisations</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="algo-name">
+                                    <span class="algo-icon matrix"></span>
+                                    Matrix
+                                </div>
+                            </td>
+                            <td><span class="complexity-badge best">O(log n)</span></td>
+                            <td><span class="complexity-badge good">O(1)</span></td>
+                            <td><span class="recommendation success">Grandes valeurs</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="algo-name">
+                                    <span class="algo-icon binet"></span>
+                                    Binet
+                                </div>
+                            </td>
+                            <td><span class="complexity-badge best">O(1)</span></td>
+                            <td><span class="complexity-badge good">O(1)</span></td>
+                            <td><span class="recommendation warning">Approximation (n &le; 78)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Complexity Chart Section -->
+    <section class="section" id="complexity">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Performance</span>
+                <h2 class="section-title">Comparaison de Complexite</h2>
+                <p class="section-description">Temps d'execution entre les methodes iterative O(n) et matricielle O(log n)</p>
+            </div>
+            
+            <div class="chart-card" data-animate>
+                <div class="chart-header">
+                    <h3 class="chart-title">Temps d'Execution vs Taille d'Entree</h3>
+                    <div class="chart-actions">
+                        <button class="chart-btn" id="resetZoomComplexity" title="Reinitialiser le zoom">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="1 4 1 10 7 10"></polyline>
+                                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="complexityChart"></canvas>
+                </div>
+                <div class="chart-legend" id="complexityLegend"></div>
+                <div class="chart-info">
+                    <div class="info-item">
+                        <span class="info-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                        </span>
+                        <span>Utilisez la molette pour zoomer, glissez pour naviguer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Binet Accuracy Section -->
+    <section class="section section-alt" id="binet">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Precision</span>
+                <h2 class="section-title">Formule de Binet</h2>
+                <p class="section-description">Analyse de la precision en virgule flottante de la formule fermee</p>
+            </div>
+            
+            <div class="alert alert-warning" data-animate>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <div class="alert-content">
+                    <strong>Avertissement Precision</strong>
+                    <p>La formule de Binet utilisant f64 n'est exacte que pour n &le; 78 en raison des limites de precision en virgule flottante.</p>
+                </div>
+            </div>
+            
+            <div class="chart-card" data-animate>
+                <div class="chart-header">
+                    <h3 class="chart-title">Erreur Relative de la Formule de Binet</h3>
+                    <div class="chart-actions">
+                        <button class="chart-btn" id="resetZoomBinet" title="Reinitialiser le zoom">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="1 4 1 10 7 10"></polyline>
+                                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="binetChart"></canvas>
+                </div>
+                <div class="chart-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="binetAccurateCount">0</div>
+                        <div class="stat-label">Valeurs exactes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="binetMaxError">0</div>
+                        <div class="stat-label">Erreur max (n=100)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Golden Ratio Section -->
+    <section class="section" id="golden">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Mathematiques</span>
+                <h2 class="section-title">Convergence vers le Nombre d'Or</h2>
+                <p class="section-description">Le ratio F(n+1)/F(n) converge vers phi (&phi;) &asymp; 1.618033988749895</p>
+            </div>
+            
+            <div class="golden-ratio-display" data-animate>
+                <div class="phi-symbol">&phi;</div>
+                <div class="phi-value">1.618033988749895</div>
+                <div class="phi-formula">
+                    <span class="formula">&phi; = (1 + &radic;5) / 2</span>
+                </div>
+            </div>
+            
+            <div class="chart-card" data-animate>
+                <div class="chart-header">
+                    <h3 class="chart-title">Convergence du Ratio vers Phi</h3>
+                    <div class="chart-actions">
+                        <button class="chart-btn" id="resetZoomGolden" title="Reinitialiser le zoom">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="1 4 1 10 7 10"></polyline>
+                                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="goldenChart"></canvas>
+                </div>
+                <div class="chart-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="goldenConvergeN">0</div>
+                        <div class="stat-label">n pour convergence</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="goldenFinalError">0</div>
+                        <div class="stat-label">Erreur finale</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">F<sub>n</sub></span>
+                    <span class="logo-text">FibBenchmark</span>
+                </div>
+                <p class="footer-description">
+                    Suite d'analyse comparative des algorithmes de calcul de Fibonacci.
+                    Construit avec Rust pour des performances maximales.
+                </p>
+                <div class="footer-links">
+                    <a href="https://github.com/agbru/FibBenchmark" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://github.com/agbru/FibBenchmark/blob/main/README.md" target="_blank" rel="noopener">Documentation</a>
+                    <a href="https://github.com/agbru/FibBenchmark/blob/main/LICENSE" target="_blank" rel="noopener">Licence MIT</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FibBenchmark. Tous droits reserves.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
